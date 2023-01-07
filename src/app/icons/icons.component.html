@@ -1,0 +1,131 @@
+<div id="main-container" >
+  <div class="panel-header panel-header-sm" style="height: 250px">
+    <div style="margin:auto">
+    <p style="color: white">ajouter ville :</p>
+    <br>
+    <button type="submit" class="btn btn-primary" (click)="onOpenModal(villes[0], 'add')">save</button>
+  </div>
+  </div>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-lg-4" *ngFor="let v of villes">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">{{v.id}}</h5>
+            <h4 class="card-title">{{v.name}}</h4>
+            <div ngbDropdown>
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'edit')">
+                <i class="now-ui-icons loader_gear"></i>
+              </button>
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'delete')">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <img src="{{v.image}}" alt="">
+            </div>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+      </div>
+    
+  </div>
+
+  <div class="modal fade" id="addVille" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Aajouter ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (submit)="addVille(addForm)">
+            <div class="form-group">
+              <label for="name">Nom de la ville :</label>
+              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="nom" required>
+            </div>
+            <div class="form-group">
+              <label for="name">URL  de l'image de la ville :</label>
+              <input type="text" ngModel name="image" class="form-control" id="image" placeholder="image" required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateVille" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">edit ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" name="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm1="ngForm">
+            <div class="form-group">
+              <label for="name">Nom de la ville :</label>
+              <input type="hidden" ngModel="{{ville?.id}}" name="id">
+
+              <input type="text" ngModel="{{ville?.name}}" name="name" class="form-control" id="name" placeholder="nom"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">URL  de l'image de la ville :</label>
+
+              <input type="text" ngModel="{{ville?.image}}" name="image" class="form-control" id="image" placeholder="nom"
+                required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"lo
+                data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" (click)="updateVille(editForm1)">save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteVille" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Delete ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete {{ville?.name}} this city </p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="add-employee-form" data-bs-dismiss="modal">No</button>
+            <button (click)="deleteVille(ville?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

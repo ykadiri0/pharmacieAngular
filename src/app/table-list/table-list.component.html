@@ -1,0 +1,80 @@
+
+	<meta charset="ISO-8859-1">
+	<title>Find Latitude and Longitude</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-map/3.0-rc1/jquery.ui.map.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="../js/map.js"></script>
+
+<div id="main-container">
+  <div class="panel-header panel-header-sm">
+  </div>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-lg-4" *ngFor="let v of phags">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">{{v.pharmacie[0]?.zone.name}}</h5>
+            <h4 class="card-title">{{v.pharmacie[0]?.name}}</h4><br>
+            <h5 class="card-category">{{v.date_debut}}<br> <i class="now-ui-icons arrows-1_minimal-right" style="font-weight: bolder;"></i><i class="now-ui-icons arrows-1_minimal-right" style="font-weight: bolder;"></i>{{v.date_fin}}</h5>
+            <div ngbDropdown>
+
+
+          </div>
+          <div class="card-body">
+            <div class="chart-area" >
+              <img src="{{v.pharmacie[0].photo}}" alt="img">
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'position')" style="background-color: white;">
+                <i class="now-ui-icons location_pin" style="color: red" style="font-weight: bolder;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade bd-example-modal-lg" id="pospha" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Position</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" name="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">latitude :</label>
+            <input type="text" ngModel="{{pha?.pharmacie[0]?.lat}}" name="lat" class="form-control" disabled id="lat"
+              placeholder="nom" required>
+          </div>
+          <div class="form-group">
+            <label for="name">longitude :</label>
+            <input type="text" ngModel="{{pha?.pharmacie[0]?.lon}}" disabled name="lon" class="form-control" id="lng"
+              placeholder="nom" required>
+          </div>
+        </div>
+
+        <div>
+        <div id="map" class="map" style="height: 450px"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+</div>

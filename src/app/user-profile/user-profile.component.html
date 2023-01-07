@@ -1,0 +1,135 @@
+<div id="main-container">
+  <div class="panel-header panel-header-sm">
+  </div>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card" style="margin: auto;">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-header">
+                <button type="submit" class="btn btn-primary" (click)="onOpenModal(gards[0], 'add')">save</button>
+                <h4 class="card-title">type de Gardes: </h4>
+              </div>
+              <div class="card-body">
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class=" text-primary">
+                      <th>
+                        ID
+                      </th>
+                      <th>
+                        Type
+                      </th>
+                      <th>
+                        edit
+                      </th>
+                      <th>
+                        delete
+                      </th>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let v of gards">
+                        <td>
+                          {{v.id}}
+                        </td>
+                        <td>
+                          {{v.type}}
+                        </td>
+                        <td><button (click)="onOpenModal(v, 'edit')">edit</button></td>
+                        <td><button (click)="onOpenModal(v, 'delete')">delete</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="addVille" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Aajouter ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (submit)="addGard(addForm)">
+            <div class="form-group">
+              <label for="name">type de garde :</label>
+              <input type="text" ngModel name="type" class="form-control" id="type" placeholder="nom" required>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button [disabled]="addForm.invalid" class="btn btn-primary" type="submit">Ajouter</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateVille" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">edit ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" name="close" id="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="name">Nom de la ville :</label>
+              <input type="text" ngModel="{{gard?.type}}" name="type" class="form-control" id="type" placeholder="type"
+                required>
+              <input type="hidden" ngModel="{{gard?.id}}" name="id">
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" (click)="updateGard(editForm)">save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteVille" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Delete ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the type of gard {{gard?.type}} </p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="add-employee-form" data-bs-dismiss="modal">No</button>
+            <button (click)="deleteGard(gard?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

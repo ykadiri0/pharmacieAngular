@@ -1,0 +1,173 @@
+
+	<meta charset="ISO-8859-1">
+	<title>Find Latitude and Longitude</title>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-map/3.0-rc1/jquery.ui.map.js"></script>
+	<script src="https://maps.googleapis.com/maps/api/js"></script>
+	<script type="text/javascript" src="../js/map.js"></script> 
+
+<div id="main-container">
+  <div class="panel-header panel-header-sm">
+  </div>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-lg-4" *ngFor="let v of phas">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">{{v.zone.name}}</h5>
+            <h4 class="card-title">{{v.name}}</h4>
+            <div ngbDropdown>
+              <div *ngIf="v.etat==0 || v.etat==2">
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" style="background-color: rgb(0, 241, 0)"  (click)="onOpenModal(v, 'etatp')">
+                <i class="now-ui-icons ui-1_check" style="color: white"></i>
+              </button>
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" style="background-color: red" (click)="onOpenModal(v, 'etatn')">
+                <i class="now-ui-icons ui-1_simple-remove" style="color: white"></i>
+              </button>
+            </div>
+            <div *ngIf="v.etat==1">
+              <br><br>
+              <i class="now-ui-icons ui-1_check" style="color: rgb(0, 236, 0);font-weight: bolder"></i>
+
+          </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area" >
+              <img src="{{v.photo}}" alt="" name="photo">
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="stats">
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'position')" style="background-color: white;">
+                <i class="now-ui-icons location_pin" style="color: red; font-weight: bolder;"></i>
+              </button>
+                        
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'hist')" style="background-color: white;">
+                <i class="now-ui-icons education_agenda-bookmark" style="color: black;font-weight: bolder;"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade bd-example-modal-lg" id="pospha" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Position</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" name="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="name">latitude :</label>
+            <input type="text" ngModel="{{pha?.lat}}" name="lat" class="form-control" disabled id="lat"
+              placeholder="nom" required>
+          </div>
+          <div class="form-group">
+            <label for="name">longitude :</label>
+            <input type="text" ngModel="{{pha?.lon}}" disabled name="lon" class="form-control" id="lng"
+              placeholder="nom" required>
+          </div>
+        </div>
+        
+        <div>
+        <div id="map" class="map" style="height: 450px"></div>
+      </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="etatp" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Etat positif</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="sed">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>c'est sur que vous voulez valider {{pha?.name}} </p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="add-employee-form" data-bs-dismiss="modal">No</button>
+            <button (click)="etatpositif(pha)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="modal fade" id="etatn" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true" style="">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Etat negatif</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="sed">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>c'est sur que vous voulez valider {{pha?.name}} </p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="add-employee-form" data-bs-dismiss="modal">No</button>
+            <button (click)="etatnegatif(pha)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="hist" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Historique</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="sed">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <thead class=" text-primary">
+              <th>
+                id
+              </th>
+              <th>
+                date_debut
+              </th>
+              <th>
+                date_fin
+              </th>
+            </thead>
+            <tbody>
+              <tr *ngFor="let v of phagards">
+                <td>
+                  {{v?.id}}
+                </td>
+                <td>
+                  {{v?.date_fin}}
+                </td>
+                <td>
+                  {{v?.date_debut}}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

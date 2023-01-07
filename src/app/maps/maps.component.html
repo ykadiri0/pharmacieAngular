@@ -1,0 +1,143 @@
+<div id="main-container">
+  <div class="panel-header panel-header-sm" style="height: 250px">
+    <div style="margin:auto">
+    <p style="color: white">ajouter zone : </p>
+    <br>
+    <button type="submit" class="btn btn-primary" (click)="onOpenModal(zones[0], 'add')">save</button>
+  </div>
+  </div>
+
+  <div class="main-content">
+    <div class="row">
+      <div class="col-lg-4" *ngFor="let v of zones">
+        <div class="card card-chart">
+          <div class="card-header">
+            <h5 class="card-category">Ville : {{v.ville.name}}</h5>
+            <h4 class="card-title">{{v.name}}</h4>
+            <div ngbDropdown>
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'edit')">
+                <i class="now-ui-icons loader_gear"></i>
+              </button>
+              <button type="button" class="btn btn-round btn-default dropdown-toggle btn-simple btn-icon no-caret" (click)="onOpenModal(v, 'delete')">
+                <i class="now-ui-icons ui-1_simple-remove"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="chart-area">
+              <img src="{{v.image}}" alt="">
+            </div>
+          </div>
+          <div class="card-footer">
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
+
+  <!-- Edit Modal -->
+  <div class="modal fade" id="updateZone" tabindex="-1" role="dialog" aria-labelledby="employeeEditModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">edit ville</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" name="close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #editForm="ngForm">
+            <div class="form-group">
+              <label for="name">Nom de la Zone :</label>
+              <input type="text" ngModel="{{zone?.name}}" name="name" class="form-control" id="name" placeholder="nom"
+                required>
+                <input type="hidden" ngModel="{{zone?.id}}" name="id" class="form-control" id="id" placeholder="id"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">image de la Zone :</label>
+              <input type="text" ngModel="{{zone?.image}}" name="image" class="form-control" id="imqge" placeholder="nom"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">Nom de la ville :</label>
+              <select ngModel id="ville" name="ville">
+                <option *ngFor="let v of villes" [ngValue]="v">{{v.name}}</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary" (click)="updateZone(editForm.value)">save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="modal fade" id="addZone" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addEmployeeModalLabel">Aajouter Zone</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form #addForm="ngForm" (submit)="addZone(addForm)">
+            <div class="form-group">
+              <label for="name">Nom de la Zone :</label>
+              <input type="text" ngModel name="name" class="form-control" id="name" placeholder="nom"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">image de la Zone :</label>
+              <input type="text" ngModel name="image" class="form-control" id="image" placeholder="image"
+                required>
+            </div>
+            <div class="form-group">
+              <label for="name">Nom de la ville :</label>
+              <select ngModel id="ville" name="ville">
+                <option *ngFor="let v of villes" [ngValue]="v">{{v.name}}</option>
+              </select>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="add-employee-form" class="btn btn-secondary"
+                data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">save</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Modal -->
+  <div class="modal fade" id="deleteZone" tabindex="-1" role="dialog" aria-labelledby="deleteModelLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteModelLabel">Delete Zone</h5>
+          <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" id="sed">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete {{zone?.name}} this city </p>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" id="add-employee-form" data-bs-dismiss="modal">No</button>
+            <button (click)="deleteZone(zone?.id)" class="btn btn-danger" data-dismiss="modal">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
